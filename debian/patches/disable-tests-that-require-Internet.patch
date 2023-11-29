@@ -1,0 +1,22 @@
+From: Jeremy Bicha <jbicha@debian.org>
+Date: Wed, 9 Feb 2022 17:34:46 -0500
+Subject: disable tests that require Internet
+
+We should rework this to be a build flag before forwarding upstream
+---
+ libgweather/tests/meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/libgweather/tests/meson.build b/libgweather/tests/meson.build
+index 3574027..63ba8ca 100644
+--- a/libgweather/tests/meson.build
++++ b/libgweather/tests/meson.build
+@@ -20,7 +20,7 @@ gweather_tests = [
+     },
+   },
+   { 'name': 'timezones' },
+-  { 'name': 'metar' },
++  #{ 'name': 'metar' },
+ ]
+ 
+ foreach t: gweather_tests

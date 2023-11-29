@@ -1,0 +1,31 @@
+From: Jeremy Bicha <jeremy.bicha@canonical.com>
+Date: Mon, 7 Aug 2023 14:45:22 -0400
+Subject: Update Kyiv timezone name
+
+fixes timezone test on Debian where Europe/Kiev no longer exists
+
+Forwarded: https://gitlab.gnome.org/GNOME/libgweather/-/merge_requests/277
+---
+ data/Locations.xml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/data/Locations.xml b/data/Locations.xml
+index 25733ad..96e2e73 100644
+--- a/data/Locations.xml
++++ b/data/Locations.xml
+@@ -22746,13 +22746,13 @@
+       <iso-code>UA</iso-code>
+       <fips-code>UP</fips-code>
+       <timezones>
+-        <timezone id="Europe/Kiev">
++        <timezone id="Europe/Kyiv">
+           <obsoletes>Europe/Simferopol</obsoletes>
+           <obsoletes>Europe/Uzhgorod</obsoletes>
+           <obsoletes>Europe/Zaporozhye</obsoletes>
+         </timezone>
+       </timezones>
+-      <tz-hint>Europe/Kiev</tz-hint>
++      <tz-hint>Europe/Kyiv</tz-hint>
+       <!-- FIPS codes: https://en.wikipedia.org/wiki/List_of_FIPS_region_codes_(S%E2%80%93U)#UP:_Ukraine -->
+       <state>
+         <!-- Ukraine Cherkasy Oblast (region/province) -->
