@@ -1,0 +1,30 @@
+From: Jeremy Bicha <jeremy.bicha@canonical.com>
+Date: Mon, 7 Aug 2023 14:45:22 -0400
+Subject: Fix Pristina Kosovo timezone name
+
+CET isn't in Debian's tzdata
+
+Kosovo itself doesn't have its own entry
+so we have to follow tzdata and use Belgrade
+
+Forwarded: https://gitlab.gnome.org/GNOME/libgweather/-/merge_requests/278
+---
+ data/Locations.xml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/data/Locations.xml b/data/Locations.xml
+index 96e2e73..813ba21 100644
+--- a/data/Locations.xml
++++ b/data/Locations.xml
+@@ -18279,9 +18279,9 @@
+       <fips-code>KV</fips-code>
+       <timezones>
+         <!-- Pristina isn't in the Europe area of tzdata -->
+-        <timezone id="CET" />
++        <timezone id="Europe/Belgrade" />
+       </timezones>
+-      <tz-hint>CET</tz-hint>
++      <tz-hint>Europe/Belgrade</tz-hint>
+       <location>
+         <name>Pristina International Airport "Adem Jashari"</name>
+         <code>BKPR</code>

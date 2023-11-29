@@ -1,5 +1,906 @@
-template-repository (1.0-1) unstable; urgency=medium
+libgweather4 (4.4.0-1) unstable; urgency=medium
 
-  * Initial release
+  * New upstream release
 
- -- Tsic404 <liuheng@deepin.org>  Sat, 28 Jan 2023 13:46:49 +0800
+ -- Jeremy Bícha <jbicha@ubuntu.com>  Mon, 18 Sep 2023 09:59:25 -0400
+
+libgweather4 (4.3.2-1) unstable; urgency=medium
+
+  * New upstream release
+  * debian/libgweather-4.0.symbols: Add new symbols
+  * Add 2 patches to fix timezone build test
+
+ -- Jeremy Bícha <jbicha@ubuntu.com>  Mon, 07 Aug 2023 14:59:48 -0400
+
+libgweather4 (4.2.0-2) unstable; urgency=medium
+
+  * debian/control.in: Explicitly Build-Depend on libjson-glib-dev
+    and have the libgweather-4-dev Depend on libjson-glib-dev
+  * Add debian/upstream/metadata
+  * Update standards version to 4.6.2, no changes needed.
+
+ -- Jeremy Bicha <jbicha@ubuntu.com>  Sat, 25 Feb 2023 02:40:47 -0500
+
+libgweather4 (4.2.0-1) unstable; urgency=medium
+
+  * New upstream release
+
+ -- Jeremy Bicha <jbicha@ubuntu.com>  Mon, 19 Sep 2022 10:15:08 -0400
+
+libgweather4 (4.1.1-1) unstable; urgency=medium
+
+  * New upstream release
+  * debian/control.in: Bump minimum meson to 0.57.0
+  * debian/libgweather-4.0.symbols: Add new symbol
+  * Release to unstable
+
+ -- Jeremy Bicha <jbicha@ubuntu.com>  Mon, 05 Sep 2022 15:58:45 -0400
+
+libgweather4 (4.1.0-2) experimental; urgency=medium
+
+  * debian/control.in: Set Breaks for libsoup3 transition
+
+ -- Jeremy Bicha <jbicha@ubuntu.com>  Wed, 24 Aug 2022 22:38:12 -0400
+
+libgweather4 (4.1.0-1) experimental; urgency=medium
+
+  * New upstream release
+  * debian/control.in: Update dependencies to build against libsoup3
+
+ -- Jeremy Bicha <jbicha@ubuntu.com>  Fri, 05 Aug 2022 08:10:13 -0400
+
+libgweather4 (4.0.0-2) unstable; urgency=medium
+
+  * Team upload
+  * gir1.2-gweather-4.0 Breaks gnome-shell (<< 42~alpha).
+    Older versions did not specify the version of the GWeather typelib
+    to load, so they could end up expecting API version 3.0 but loading 4.0.
+    Part of bug #1008926.
+
+ -- Simon McVittie <smcv@debian.org>  Mon, 04 Apr 2022 17:04:31 +0100
+
+libgweather4 (4.0.0-1) unstable; urgency=medium
+
+  * New upstream release
+
+ -- Jeremy Bicha <jbicha@ubuntu.com>  Fri, 18 Mar 2022 15:42:51 -0400
+
+libgweather4 (3.99.0-1) unstable; urgency=medium
+
+  * New upstream release
+  * debian/control.in: Bump Standards-Version to 4.6.0
+  * debian/rules: Increase meson build test timeout
+  * Make minor packaging adjustments for Ubuntu translations
+  * Release to unstable
+
+ -- Jeremy Bicha <jeremy.bicha@canonical.com>  Fri, 04 Mar 2022 09:55:41 +0100
+
+libgweather4 (3.91.0-1) experimental; urgency=medium
+
+  * Rename source package
+    - Required because the version numbering went backwards
+      but the new major version uses a new namespace so it works
+  * New upstream release
+  * Update debian/libgweather-4-0.symbols
+  * debian/control.in: Build-Depend on gi-docgen instead of gtk-doc-tools
+  * debian/control.in: Drop unused Build-Depends on gtk3 and libglade-ui
+  * debian/control.in: Bump minimum glib to 2.68 & meson to 0.55.0
+  * debian/rules: minor cleanup
+  * debian/copyright: Update
+  * Remove all patches: applied in new release
+  * Add patch to disable the metar test since it requires Internet
+  * debian/rules: Don't ignore build test failures
+
+ -- Jeremy Bicha <jeremy.bicha@canonical.com>  Wed, 09 Feb 2022 17:36:55 -0500
+
+libgweather (40.0-5) unstable; urgency=medium
+
+  * Team upload
+  * d/rules: Collect spelling of glade_catalog Meson options.
+    Unimplemented options are considered to be an error by Meson 0.60.
+    (Closes: #998546)
+
+ -- Simon McVittie <smcv@debian.org>  Fri, 05 Nov 2021 10:53:04 +0000
+
+libgweather (40.0-4) unstable; urgency=medium
+
+  * Team upload
+
+  [ Laurent Bigonville ]
+  * debian/watch: Update to match the new version scheme
+
+  [ Jeremy Bicha ]
+  * debian/watch: Watch for stable releases
+
+  [ Simon McVittie ]
+  * d/control.in: Increase various Breaks versions for transition #993934.
+    We'll get a compatible set of versions more reliably if we require
+    a sourceful upload for each affected package.
+  * Release to unstable
+
+ -- Simon McVittie <smcv@debian.org>  Mon, 20 Sep 2021 20:51:23 +0100
+
+libgweather (40.0-3) experimental; urgency=medium
+
+  * debian/control: Lower the breaks on an installable gnome-shell version.
+    While libgweather 40 really breaks gnome-shell prior to 40, we can lower
+    the breaks so that we can upload a fixed gnome 3.38 version in order to
+    be able to upload one working with libgweather 40 without having to wait
+    for mutter-8 to be out of NEW queue.
+
+ -- Marco Trevisan (Treviño) <marco@ubuntu.com>  Wed, 26 May 2021 12:20:45 +0200
+
+libgweather (40.0-2) experimental; urgency=medium
+
+  * debian/control:
+    - build-depend on python3-gi and gir1.2-glib-2.0.
+      They're used to generate the locations variant file.
+    - Sort dependencies alphabetically
+
+ -- Marco Trevisan (Treviño) <marco@ubuntu.com>  Tue, 25 May 2021 20:28:54 +0200
+
+libgweather (40.0-1) experimental; urgency=medium
+
+  [ Simon McVittie ]
+  * New upstream release (LP: #1918044)
+    - Correct value of GWEATHER_PROVIDER_ALL to include OWM
+    - Translation updates: be, kk, uk
+    - Give better diagnostics on test failure (no functional change)
+  * Drop patches that came from upstream
+
+  [ Marco Trevisan (Treviño) ]
+  * New upstream release (LP: #1916827, LP: #1265588):
+    - This version contains a number of API and ABI changes that applications
+      will need to be modified for, including:
+      + An application-id as well as contact information must be provided for
+        every application to use online weather services. For GApplication
+        based applications, the application ID is prefilled.
+      + All online weather providers are disabled by default, applications
+        should enable those that it has verified it can follow the terms of
+        service for. Note, for example, the requirement to subscribe to the
+        met.no API users mailing-list.
+      + A lot of the getter functions for the location database now return
+        references to objects which the application will need to handle.
+        Applications that use JavaScript or Python bindings should not require
+        special handling or this change.
+  * debian/libgweather-3-16.install: Install files in libgweather library path.
+    It contains locations data in binary form for now (that are
+    arch-dependent)
+  * debian/libgweather-3-16.symbols: Add new symbols
+  * debian: Switch to debhelper 13, and simplify rules accordingly
+  * debian/control: Add breaks on rdependent packages that need to be updated.
+    This version of libgweather requires some updates on its dependencies,
+    even if there was no soname change (and no formal ABI break) we're
+    actually breaking the ABI at runtime, so various dependencies will need
+    to adapt or be rebuilt.
+    In particular e-d-s, gnome-panel and gnome-applets only need to be
+    rebuilt against, while gnome-shell, gnome-calendar, gnome-weather and
+    wmforecast needs new versions.
+    Others, didn't require any change (such as gnome-maps) or may only require
+    a rebuild to avoid leaks (as g-s-d, evolution or gnome-initial-setup), but
+    this update won't really break them.
+  * debian/patches: Cherry-pick upstream locations and translations updates
+  * debian/control: Update Standards-Version (no change required)
+
+ -- Marco Trevisan (Treviño) <marco@ubuntu.com>  Tue, 25 May 2021 19:22:00 +0200
+
+libgweather (3.36.1-3) unstable; urgency=medium
+
+  * d/p/: Add the app ID to HTTP user agent when doing a query to met.no.
+    This has been requested by the data provider to be able to track
+    misbehaving applications. The patch is cherry-picked from upstream, the
+    library should functionally be the same as 3.36.2 when querying met.no now
+    (Closes: #986016)
+
+ -- Laurent Bigonville <bigon@debian.org>  Tue, 30 Mar 2021 13:37:59 +0200
+
+libgweather (3.36.1-2) unstable; urgency=medium
+
+  [ Andreas Henriksson ]
+  * Add patches from upstream for yr.no->met.no API. These patches has been
+    cherry-picked from upstream and modified to apply directly to the yrno
+    backend (without renaming it to metno and breaking the API). (Closes:
+    #983917)
+
+  [ Laurent Bigonville ]
+  * Only use 4 significant decimals for locations when sending the query.
+    Patch from upstream. More precision is not needed and this helps to
+    improve caching on the provider side and reduce their load.
+
+ -- Iain Lane <laney@debian.org>  Wed, 10 Mar 2021 17:26:48 +0000
+
+libgweather (3.36.1-1) unstable; urgency=medium
+
+  * Team upload
+  * New upstream release
+    - This version works around the unavailability of the NOAA weather
+      services by using very short-term forecasts as current weather
+      conditions. (Closes: #968909)
+
+ -- Simon McVittie <smcv@debian.org>  Fri, 28 Aug 2020 23:36:23 +0100
+
+libgweather (3.36.0-1) unstable; urgency=medium
+
+  * New upstream release
+    - debian/libgweather-3-16.symbols: Add newly exported symbol
+  * debian/rules: Also set the HOME to a writable directory for the tests
+  * debian/control.in: Bump Standards-Version to 4.5.0 (no further changes)
+  * debian/control.in: Set Rules-Requires-Root: no
+
+ -- Laurent Bigonville <bigon@debian.org>  Thu, 12 Mar 2020 20:23:22 +0100
+
+libgweather (3.34.0-1) unstable; urgency=medium
+
+  * New upstream release
+  * Build-Depend on debhelper-compat 12 and drop debian/compat
+  * Build-Depend on dh-sequence-gir and dh-sequence-gnome
+  * Upload to unstable
+
+ -- Jeremy Bicha <jbicha@debian.org>  Sun, 13 Oct 2019 18:04:50 -0400
+
+libgweather (3.33.92-1) experimental; urgency=medium
+
+  * New upstream release
+  * Bump meson build-dep as per meson.build
+
+ -- Andreas Henriksson <andreas@fatal.se>  Sun, 15 Sep 2019 22:33:53 +0200
+
+libgweather (3.33.0-1) experimental; urgency=medium
+
+  * New upstream release.
+    - In 3.31.91, ABI was broken without changing SONAME (see upstream
+      issue #17). In this release the SONAME is bumped.
+  * Update debian/watch to track also unstable versions.
+  * Bump required libglib2.0-dev to 2.44.0, following upstream meson.build.
+  * Rename libgweather-3-15 to libgweather-3-16, to match new SONAME.
+  * Bump Standards-Version to 4.4.0, no changes needed.
+  * Remove empty debian/patches/series.
+
+ -- Dmitry Shachnev <mitya57@debian.org>  Wed, 28 Aug 2019 19:33:11 +0300
+
+libgweather (3.32.1-1) experimental; urgency=medium
+
+  * New upstream release
+
+ -- Jeremy Bicha <jbicha@debian.org>  Wed, 20 Mar 2019 20:20:13 -0400
+
+libgweather (3.32.0-1) experimental; urgency=medium
+
+  * New upstream release
+  * debian/libgweather-3-15.symbols: Add new symbols
+
+ -- Jeremy Bicha <jbicha@debian.org>  Thu, 14 Mar 2019 07:14:03 -0400
+
+libgweather (3.28.3-2) unstable; urgency=medium
+
+  * Team upload
+  * d/p/Locations-Update-ICAO-for-Lima-Callao-Jorge-Ch-vez-Intern.patch:
+    Backport corrected ICAO code for Lima-Callao, Jorge Chávez
+    International Airport. Thanks to Diego Escalante Urrelo.
+    (Closes: #935075)
+  * d/gbp.conf: Set packaging branch to debian/unstable.
+    The debian/master branch already contains newer upstream releases
+    targeting experimental.
+
+ -- Simon McVittie <smcv@debian.org>  Mon, 19 Aug 2019 20:52:16 +0100
+
+libgweather (3.28.3-1) unstable; urgency=medium
+
+  * New upstream bugfix release
+    - Fix a possible crash in gnome-shell
+    - Fix infinite loop calculating sunset/sunrise for named timezones
+    - Fix METAR weather extraction
+    - Fix "nearest station" fallback code
+    - Fix reproducibility with enum header
+    - Updated translations
+
+ -- Jeremy Bicha <jbicha@debian.org>  Thu, 14 Mar 2019 07:04:43 -0400
+
+libgweather (3.28.2-2) unstable; urgency=medium
+
+  * Restore -Wl,-O1 to our LDFLAGS
+  * debian/libgweather-3-15.symbols: Add Build-Depends-Package
+  * Update dh_translations override for Ubuntu
+  * Bump Standards-Version to 4.3.0
+
+ -- Jeremy Bicha <jbicha@debian.org>  Fri, 28 Dec 2018 08:18:31 -0500
+
+libgweather (3.28.2-1) unstable; urgency=medium
+
+  * New upstream bug-fix release
+
+ -- Tim Lunn <tim@feathertop.org>  Sun, 09 Sep 2018 18:51:22 +1000
+
+libgweather (3.28.1-1) unstable; urgency=medium
+
+  * New upstream release
+
+ -- Jeremy Bicha <jbicha@debian.org>  Thu, 22 Mar 2018 13:27:24 -0400
+
+libgweather (3.28.0-2) unstable; urgency=medium
+
+  * Release to unstable
+
+ -- Jeremy Bicha <jbicha@debian.org>  Sun, 11 Mar 2018 11:37:04 -0400
+
+libgweather (3.28.0-1) experimental; urgency=medium
+
+  * New upstream release (LP: #1753136)
+  * Have libgweather-3-dev depend on libgeocode-glib-dev
+  * Add workaround for Ubuntu translations issue
+  * Update debian/docs to install README.md (Closes: #891540)
+
+ -- Jeremy Bicha <jbicha@debian.org>  Fri, 09 Mar 2018 06:18:19 -0500
+
+libgweather (3.27.4-1) experimental; urgency=medium
+
+  * New upstream development release
+  * Rename library to match new soname
+  * Build with meson
+  * Build-Depend on ca-certificates for build tests
+  * Set XDG_RUNTIME_DIR to a writable location for build tests
+  * Ignore build test failures since some tests require Internet access
+  * Update Vcs fields for migration to https://salsa.debian.org/
+
+ -- Jeremy Bicha <jbicha@debian.org>  Sat, 10 Feb 2018 08:11:06 -0500
+
+libgweather (3.26.1-2) unstable; urgency=medium
+
+  * Update Vcs fields for conversion to git
+  * Add debian/gbp.conf
+  * Bump debhelper compat to 11
+  * Build with all hardening flags
+  * Add debian/docs to install NEWS and README
+
+ -- Jeremy Bicha <jbicha@debian.org>  Mon, 18 Dec 2017 19:01:25 -0500
+
+libgweather (3.26.1-1) unstable; urgency=medium
+
+  * New upstream release
+  * Bump Standards-Version to 4.1.2
+
+ -- Jeremy Bicha <jbicha@debian.org>  Mon, 11 Dec 2017 10:40:37 -0500
+
+libgweather (3.26.0-1) unstable; urgency=medium
+
+  * New upstream release
+
+ -- Jeremy Bicha <jbicha@debian.org>  Mon, 11 Sep 2017 15:13:50 -0400
+
+libgweather (3.25.92-1) unstable; urgency=medium
+
+  * New upstream release
+
+ -- Jeremy Bicha <jbicha@debian.org>  Mon, 04 Sep 2017 15:01:29 -0400
+
+libgweather (3.25.91-1) unstable; urgency=medium
+
+  * New upstream release
+  * debian/libgweather-3-6.symbols: Add new symbols
+  * Bump Standards-Version to 4.1.0
+
+ -- Jeremy Bicha <jbicha@ubuntu.com>  Tue, 29 Aug 2017 14:02:14 -0400
+
+libgweather (3.20.4-1) unstable; urgency=medium
+
+  [ Jeremy Bicha ]
+  * New upstream release (Closes: #839365)
+  * debian/control.in: Explicitly Build-Depend on tzdata
+
+  [ Michael Biebl ]
+  * Bump debhelper compat level to 10 for automatic autoreconf.
+    (Closes: #558572)
+  * Drop 99_ltmain_as-needed.patch and use dh_autoreconf --as-needed instead.
+  * Enable gir addon to ensure proper dependencies for gir1.2-gweather-3.0.
+
+ -- Michael Biebl <biebl@debian.org>  Fri, 30 Dec 2016 01:29:49 +0100
+
+libgweather (3.20.3-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Andreas Henriksson <andreas@fatal.se>  Wed, 31 Aug 2016 18:08:49 +0200
+
+libgweather (3.20.2-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Switch from cdbs to dh
+
+ -- Andreas Henriksson <andreas@fatal.se>  Tue, 16 Aug 2016 10:53:47 +0200
+
+libgweather (3.20.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Enable and install glade catalog file.
+  * Bump Standards-Version to 3.9.8.
+  * Drop obsolete --enable-locations-compression configure switch.
+
+ -- Michael Biebl <biebl@debian.org>  Tue, 10 May 2016 17:22:45 +0200
+
+libgweather (3.20.0-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Andreas Henriksson <andreas@fatal.se>  Thu, 24 Mar 2016 16:32:21 +0100
+
+libgweather (3.19.92-1) experimental; urgency=medium
+
+  * New upstream release.
+  * Bump libsoup2.4-dev (build-)dependency to (>= 2.44.0)
+  * Bump Standards-Version to 3.9.7.
+
+ -- Andreas Henriksson <andreas@fatal.se>  Tue, 15 Mar 2016 21:59:33 +0100
+
+libgweather (3.18.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Refresh debian/patches/99_ltmain_as-needed.patch.
+  * Stop overriding DEB_BUILDDIR, no longer necessary.
+
+ -- Michael Biebl <biebl@debian.org>  Mon, 12 Oct 2015 18:34:37 +0200
+
+libgweather (3.18.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Add new symbol (gweather_temperature_unit_to_real) to the symbols file.
+  * Update debian/copyright.
+  * Drop ancient Conflicts against libgweather1.
+
+ -- Dmitry Shachnev <mitya57@debian.org>  Mon, 28 Sep 2015 11:40:20 +0300
+
+libgweather (3.16.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Drop clean-la.mk include, we no longer ship any libtool .la files.
+  * Add new gweather_location_new_detached symbol to symbols file.
+  * Convert to multiarch.
+  * Bump debhelper compatibility level to 9.
+
+ -- Michael Biebl <biebl@debian.org>  Wed, 20 May 2015 01:00:54 +0200
+
+libgweather (3.14.1-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Fixes yr.no weather backend. (Closes: #761195)
+  * Add Homepage field.
+  * Bump Standards-Version to 3.9.6. No further changes.
+
+ -- Michael Biebl <biebl@debian.org>  Mon, 13 Oct 2014 20:57:00 +0200
+
+libgweather (3.14.0-2) unstable; urgency=medium
+
+  * Install gir1.2-gweather-3.0 files in multi-arch path (Closes: #764446)
+    - previous attempt at trying to avoid m-a installed things in wrong dir.
+
+ -- Andreas Henriksson <andreas@fatal.se>  Thu, 09 Oct 2014 21:37:26 +0200
+
+libgweather (3.14.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/gir1.2-gweather-3.0.install: fix building with new
+    multiarchified gobject-introspection version.
+  * Upload to unstable.
+
+ -- Andreas Henriksson <andreas@fatal.se>  Mon, 22 Sep 2014 19:55:36 +0200
+
+libgweather (3.13.91-1) experimental; urgency=medium
+
+  * New upstream release
+  * debian/libgweather-3-6.symbols: Updated
+  * debian/control.in: Bump b-d
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Sun, 07 Sep 2014 14:18:36 +0200
+
+libgweather (3.12.2-1) unstable; urgency=medium
+
+  * Team upload.
+
+  [ Jackson Doak ]
+  * New upstream release
+
+ -- Andreas Henriksson <andreas@fatal.se>  Sat, 12 Jul 2014 15:12:22 +0200
+
+libgweather (3.12.1-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Andreas Henriksson <andreas@fatal.se>  Fri, 09 May 2014 20:22:22 +0200
+
+libgweather (3.12.0-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Andreas Henriksson <andreas@fatal.se>  Wed, 26 Mar 2014 19:04:18 +0100
+
+libgweather (3.11.91-1) experimental; urgency=medium
+
+  [ Jackson Doak ]
+  * New upstream release
+    - Update symbols for new release
+  * debian/control: Bump standard-version to 3.9.5 (no changes)
+
+ -- Andreas Henriksson <andreas@fatal.se>  Sun, 16 Mar 2014 19:43:53 +0100
+
+libgweather (3.10.1-2) unstable; urgency=medium
+
+  * Upload to unstable.
+
+ -- Emilio Pozuelo Monfort <pochu@debian.org>  Sat, 22 Feb 2014 19:13:48 +0100
+
+libgweather (3.10.1-1) experimental; urgency=low
+
+  * Team upload.
+
+  [ Andreas Henriksson ]
+  * New upstream release.
+  * Drop debian/patches/0001-Don-t-crash-when-unsetting-the-location.patch
+    - now included in upstream release.
+  * Add build-dependency on valac (>= 0.20)
+    - for vala bindings generation
+  * Install gweather vapi in libgweather-3-dev
+
+ -- Sébastien Villemot <sebastien@debian.org>  Sat, 28 Dec 2013 00:13:02 +0100
+
+libgweather (3.10.0-1) experimental; urgency=low
+
+  * Team upload
+  * New upstream release
+    - Bump soname to 6
+  * Update debian/libgweather-3-6.symbols
+  * debian/control: Add homepage
+
+ -- Jackson Doak <noskcaj@ubuntu.com>  Thu, 17 Oct 2013 13:21:52 +0200
+
+libgweather (3.8.2-3) unstable; urgency=low
+
+  * d/p/0001-Don-t-crash-when-unsetting-the-location.patch
+    + Added, don't crash when the location is unset
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Sun, 22 Sep 2013 20:31:29 +0200
+
+libgweather (3.8.2-2) unstable; urgency=low
+
+  [ Michael Biebl ]
+  * Upload to unstable.
+  * Drop explicit Build-Depends on gir1.2-glib-2.0 and gir1.2-gtk-3.0, they
+    are pulled in by their corresponding -dev package.
+  * Bump Standards-Version to 3.9.4. No further changes.
+
+ -- Andreas Henriksson <andreas@fatal.se>  Tue, 17 Sep 2013 21:41:04 +0200
+
+libgweather (3.8.2-1) experimental; urgency=low
+
+  * Bump libgweather-3-3 dependency on libgweather-common to (>= 3.5.0)
+    - needed for new gsettings schema (with org.gnome.GWeather)
+  * New upstream release.
+
+ -- Andreas Henriksson <andreas@fatal.se>  Mon, 17 Jun 2013 23:28:29 +0200
+
+libgweather (3.8.0-1) experimental; urgency=low
+
+  * Change libsoup build-dependency according to upstream changes
+    "We no longer use libsoup-gnome, and instead depend
+     on a newer libsoup (>= 2.34) which uses libproxy to
+     access proxy configuration"
+  * New upstream release.
+
+ -- Andreas Henriksson <andreas@fatal.se>  Thu, 04 Apr 2013 18:12:31 +0200
+
+libgweather (3.7.91-1) experimental; urgency=low
+
+  * New upstream release
+  * debian/control.in: Bump build-deps
+  * Updated soname
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Fri, 15 Mar 2013 22:30:33 +0100
+
+libgweather (3.6.0-1) experimental; urgency=low
+
+  * New upstream release
+  * debian/patches/99_ltmain_as-needed.patch: Refreshed
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Fri, 05 Oct 2012 21:46:06 +0200
+
+libgweather (3.4.1-1) unstable; urgency=low
+
+  * New upstream release.
+  * Change section of gir1.2-gweather-3.0 to introspection.
+  * debian/patches/99_ltmain_as-needed.patch: Refreshed.
+  * Drop explicit Build-Depends on gir1.2-gtk-3.0.
+  * Update debian/copyright using the machine-readable copyright format 1.0.
+  * Bump Standards-Version to 3.9.3.
+
+ -- Michael Biebl <biebl@debian.org>  Thu, 15 Mar 2012 18:26:55 +0100
+
+libgweather (3.2.1-1) unstable; urgency=low
+
+  * Rename the source package back to libgweather since we no longer need
+    co-installability with the 2.x packages.
+  * debian/watch:
+    - Track .xz tarballs.
+  * New upstream release.
+
+ -- Michael Biebl <biebl@debian.org>  Thu, 03 Nov 2011 17:15:34 +0100
+
+libgweather3 (3.2.0-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/rules:
+    - Build static libraries.
+    - Build gtk-doc documentation.
+  * debian/control:
+    - Add Build-Depends on gtk-doc-tools.
+
+ -- Michael Biebl <biebl@debian.org>  Thu, 29 Sep 2011 06:27:25 +0200
+
+libgweather3 (3.0.2-1) unstable; urgency=low
+
+  [ Josselin Mouette ]
+  * Fix long description for GIR package.
+  * Make the -dev package depend on the gir package.
+  * Rename the source package to allow parallel migration to testing.
+
+  [ Michael Biebl ]
+  * debian/watch: Switch to .bz2 tarballs.
+  * New upstream release.
+  * debian/control.in
+    - Update Vcs-* fields for the new source package name, switch branch to
+      unstable.
+    - Remove Replaces: gnome-applets-dev (<< 2.21.3). This was required for
+      upgrades to lenny and is now obsolete.
+  * Bump debhelper compatibility level to 8.
+    - Update Build-Depends on debhelper.
+    - Strip leading debian/tmp/ from .install files.
+  * Bump Standards-Version to 3.9.2. No further changes.
+  * Add symbols file for libgweather-3-0 for improved shlibs dependencies.
+
+ -- Michael Biebl <biebl@debian.org>  Sat, 04 Jun 2011 22:46:51 +0200
+
+libgweather (2.91.6-1) experimental; urgency=low
+
+  [ Frederic Peters ]
+  * New upstream development release.
+  * debian/control.in:
+    * Update package names and build dependencies for GTK+ 3
+    * Add a package for GObject introspection data
+
+  [ Josselin Mouette ]
+  * Fix shlibs file.
+
+ -- Josselin Mouette <joss@debian.org>  Wed, 16 Mar 2011 22:37:00 +0100
+
+libgweather (2.30.3-1) unstable; urgency=low
+
+  * New upstream stable release (translation updates only).
+
+ -- Michael Biebl <biebl@debian.org>  Wed, 17 Nov 2010 02:47:28 +0100
+
+libgweather (2.30.2-1) unstable; urgency=low
+
+  * New upstream stable release.
+  * debian/patches/99_ltmain_as-needed.patch
+    - Refresh for new upstream release.
+  * debian/control
+    - Add Vcs-Browser and Vcs-Svn fields.
+    - Bump Standards-Version to 3.9.1. No further changes.
+
+ -- Michael Biebl <biebl@debian.org>  Tue, 27 Jul 2010 19:30:48 +0200
+
+libgweather (2.30.0-2) unstable; urgency=low
+
+  [ Emilio Pozuelo Monfort ]
+  * debian/control.in,
+    debian/rules:
+    - Switch to CDBS' python-autotools.mk.
+  * debian/source/format,
+    debian/patches/series,
+    debian/rules:
+    - Switch to quilt and source format 3.0 (quilt).
+  * debian/patches/99_ltmain_as-needed.patch:
+    - Refreshed.
+  * debian/libgweather-common.install:
+    - Install the icons here. Closes: #580244.
+  * debian/control.in:
+    - Standards-Version is 3.8.4, no changes needed.
+    - Tighten the -dev package dependency on the shared library package.
+
+ -- Josselin Mouette <joss@debian.org>  Fri, 07 May 2010 21:59:58 +0200
+
+libgweather (2.30.0-1) unstable; urgency=low
+
+  * New upstream stable release:
+    + debian/rules:
+      - Update SHVER to 2.30.0 because of API additions.
+
+ -- Sebastian Dröge <slomo@debian.org>  Mon, 12 Apr 2010 12:12:34 +0200
+
+libgweather (2.28.0-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/rules:
+    - Bump SHVER to 2.28.0 since there are API additions.
+  * debian/patches/01_python_include_dir.patch,
+    debian/patches/02_python__init__executable.patch:
+    - Removed, applied upstream.
+
+ -- Emilio Pozuelo Monfort <pochu@debian.org>  Tue, 22 Sep 2009 16:37:05 +0200
+
+libgweather (2.26.2.1-2) unstable; urgency=low
+
+  * debian/patches/02_python__init__executable.patch:
+    - Don't install __init__.py with executable permissions.
+  * debian/copyright:
+    - Updated, some files are licensed under the LGPL.
+
+ -- Emilio Pozuelo Monfort <pochu@debian.org>  Sat, 29 Aug 2009 01:33:17 +0200
+
+libgweather (2.26.2.1-1) unstable; urgency=low
+
+  * Build the python bindings in python-gweather. Closes: #539091.
+    - libgweather/debian/patches/01_python_include_dir.patch:
+      Fix the build of the bindings out of tree.
+  * debian/copyright: add "Copyright" to the debian packaging copyright
+    notice.
+  * Standards-Version is 3.8.3, no changes needed.
+  * debian/watch: don't uupdate.
+  * New upstream bugfix release.
+
+ -- Emilio Pozuelo Monfort <pochu@debian.org>  Fri, 28 Aug 2009 23:32:22 +0200
+
+libgweather (2.26.1-1) unstable; urgency=low
+
+  * New upstream release.
+    + Does not use combo characters for degrees. Closes: #486523.
+  * Update build-dependencies.
+  * Bump shlibs version to 2.25.4.
+  * Build-depend on libglib2.0-doc and libgtk2.0-doc to ensure proper
+    xrefs.
+  * Standards version is 3.8.1.
+  * 01_compress_locations.patch and libgweather-common.compress:
+    removed, fixed upstream. Enable compression in configure flags
+    instead.
+  * Install documentation in libgweather-dev.
+  * Update list of copyright holders.
+
+ -- Josselin Mouette <joss@debian.org>  Sat, 25 Apr 2009 18:45:18 +0200
+
+libgweather (2.24.3-1) unstable; urgency=low
+
+  * New upstream release, only fixes LICENSE file.
+
+ -- Josselin Mouette <joss@debian.org>  Wed, 04 Mar 2009 17:09:20 +0100
+
+libgweather (2.24.2-2) experimental; urgency=low
+
+  * debian/control.in: Bump the libgweather-common depend up to (>= 2.24.0)
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Mon, 19 Jan 2009 14:19:59 +1100
+
+libgweather (2.24.2-1) experimental; urgency=low
+
+  * New upstream release.
+
+ -- Josselin Mouette <joss@debian.org>  Sun, 04 Jan 2009 13:18:41 +0100
+
+libgweather (2.24.1-1) experimental; urgency=low
+
+  * New upstream release.
+  * Bump build-dependencies.
+  * Set shlibs version to 2.23.92.
+  * 01_compress_locations.patch: updated to apply again.
+  * 99_ltmain_as-needed.patch: update for new version.
+  * Prepare everything needed to build python-gweather, but disable it
+    for the moment since the API is unstable.
+
+ -- Josselin Mouette <joss@debian.org>  Fri, 21 Nov 2008 20:25:35 +0100
+
+libgweather (2.22.3-1) unstable; urgency=low
+
+  * New upstream bugfix release.
+  * debian/control.in:
+    + Update Standards-Version to 3.8.0, no additional changes needed.
+
+ -- Sebastian Dröge <slomo@debian.org>  Mon, 30 Jun 2008 12:48:40 +0200
+
+libgweather (2.22.2-2) unstable; urgency=low
+
+  * Make priority optional.
+  * 01_compress_locations.patch: look for .xml.gz files instead of .xml.
+  * libgweather-common.compress: compress the files with dh_compress.
+  * Enforce upgrading them together with Depends/Conflicts.
+
+ -- Josselin Mouette <joss@debian.org>  Mon, 23 Jun 2008 18:51:31 +0200
+
+libgweather (2.22.2-1) unstable; urgency=low
+
+  [ Sven Arvidsson ]
+  * debian/control.in:
+    + Update short description for -common and -dev packages
+    (Closes: #475495)
+
+  [ Josselin Mouette ]
+  * Upload to unstable.
+  * New upstream bugfix and translation release.
+
+ -- Josselin Mouette <joss@debian.org>  Wed, 28 May 2008 02:43:35 +0200
+
+libgweather (2.22.1.2-1) experimental; urgency=low
+
+  * New upstream bugfix release:
+    + debian/patches/03_fix-locations.patch:
+      - Dropped, merged upstream.
+    + debian/control.in:
+      - Build depend on libxml2-utils for xmllint.
+
+ -- Sebastian Dröge <slomo@debian.org>  Thu, 17 Apr 2008 09:30:03 +0200
+
+libgweather (2.22.1.1-1) experimental; urgency=low
+
+  * debian/control.in:
+    + Build depend on libxml-parser-perl (Closes: #471296).
+  * New upstream bugfix release with API changes:
+    + debian/control.in,
+      libgweather1.install:
+      - Update soname.
+      - Build depend on libxml2-dev.
+    + debian/patches/01_location-dist-fixes.patch,
+      debian/patches/02_location-dist-files.patch:
+      - Dropped, merged upstream.
+    + debian/patches/99_ltmain_as-needed.patch:
+      - Updated to apply cleanly again.
+
+ -- Sebastian Dröge <slomo@debian.org>  Tue, 08 Apr 2008 20:19:12 +0200
+
+libgweather (2.22.0-1) experimental; urgency=low
+
+  * New package, based on the Ubuntu packaging.
+  * debian/control.in:
+    + Wrap dependencies, update build dependencies.
+    + Correct dependencies of the -dev package.
+  * debian/watch:
+    + Added watch file.
+  * debian/patches/01_location-dist-fixes.patch,
+    debian/patches/02_location-dist-files.patch,
+    debian/patches/03_fix-locations.patch,
+    debian/patches/98_autoreconf.patch:
+    + Ported patches from gnome-applets for disting and correcting the weather
+      locations.
+  * debian/patches/99_ltmain_as-needed.patch,
+    debian/rules:
+    + Add -Wl,-z,defs -Wl,-O1 -Wl,--as-needed to LDFLAGS.
+
+ -- Sebastian Dröge <slomo@debian.org>  Wed, 12 Mar 2008 14:39:26 +0100
+
+libgweather (2.22.0-0ubuntu1) hardy; urgency=low
+
+  * New upstream version
+
+ -- Christophe Sauthier <christophe.sauthier@gmail.com>  Tue, 11 Mar 2008 16:02:03 +0100
+
+libgweather (2.21.92-0ubuntu1) hardy; urgency=low
+
+  * New upstream version
+
+ -- Christophe Sauthier <christophe.sauthier@gmail.com>  Tue, 26 Feb 2008 20:54:29 +0100
+
+libgweather (2.21.2-0ubuntu1) hardy; urgency=low
+
+  * New upstream version
+  * debian/control:
+    - updated the description
+
+ -- Sebastien Bacher <seb128@canonical.com>  Mon, 14 Jan 2008 23:12:48 +0100
+
+libgweather (2.21.1-0ubuntu1) hardy; urgency=low
+
+  * Upload to ubuntu
+
+ -- Sebastien Bacher <seb128@canonical.com>  Mon, 14 Jan 2008 10:45:38 +0100
+
+libgweather (2.22.0-2.1) unstable; urgency=low
+
+  * debian/control.in:
+    + Build depend on libxml-parser-perl (Closes: #471296).
+  *
+
+ -- Sebastian Dröge <slomo@debian.org>  Tue, 08 Apr 2008 20:19:12 +0200

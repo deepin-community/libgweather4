@@ -1,4 +1,26 @@
 #!/usr/bin/make -f
 
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export DEB_LDFLAGS_MAINT_APPEND = -Wl,-O1 -Wl,-z,defs
+export DPKG_GENSYMBOLS_CHECK_LEVEL = 4
+
 %:
 	dh $@
+
+override_dh_auto_configure:
+	dh_auto_configure -- \
+                             -Denable_vala=true \
+                             -Dgtk_doc=true
+
+# Ubuntu's dh_translations can't handle two .pot files yet
+# https://launchpad.net/bugs/1751820
+override_dh_translations:
+	dh_translations --domain=libgweather-4.0
+	ninja -C obj-$(DEB_HOST_GNU_TYPE) libgweather-4.0-locations-pot
+
+override_dh_auto_clean:
+	dh_auto_clean
+	rm -f po-locations/libgweather-4.0-locations.pot
+
+override_dh_auto_test:
+	dh_auto_test -- --timeout-multiplier=3

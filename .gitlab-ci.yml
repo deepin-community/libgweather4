@@ -1,0 +1,283 @@
+variables:
+
+stages:
+  - style-check
+  - build
+  - analysis
+  - docs
+  - deploy
+
+.only-default:
+  only:
+    - merge_requests
+    - branches
+  except:
+    - tags
+
+style-check-diff:
+  extends: .only-default
+  image: fedora:latest
+  stage: style-check
+  script:
+    - dnf install -y clang-tools-extra curl diffutils git
+    - sh -x ./.gitlab-ci/run-style-check.sh
+
+# Recipe for setting up the build
+# @PROJECT_DEPS: the dependencies of the project (on Fedora)
+# @MESON_VERSION: the version of Meson required by the project
+.build-setup:
+  image: fedora:latest
+  extends: .only-default
+  before_script:
+    # Undo delangification present in the Fedora Docker images
+    - rm -f /etc/rpm/macros.image-language-conf
+    - dnf reinstall -y glib2 glibc || dnf update -y glib2 glibc
+    # Add French locale support for tests
+    - dnf install -y glibc-langpack-fr
+    - dnf install -y ${PROJECT_DEPS}
+    - pip3 install --user meson==${MESON_VERSION}
+    - export PATH="$PATH:$HOME/.local/bin"
+
+# Default build recipe
+# @PROJECT_DEPS: the dependencies of the project (on Fedora)
+# @MESON_VERSION: the version of Meson required by the project
+# @MESON_EXTRA_FLAGS: extra arguments for the meson setup invocation
+.build-default:
+  image: fedora:latest
+  extends: .only-default
+  before_script:
+    # Undo delangification present in the Fedora Docker images
+    - rm -f /etc/rpm/macros.image-language-conf
+    - dnf reinstall -y glib2 glibc || dnf update -y glib2 glibc
+    # Add French locale support for tests
+    - dnf install -y glibc-langpack-fr
+    - dnf install -y ${PROJECT_DEPS}
+    - pip3 install --user meson==${MESON_VERSION}
+    - export PATH="$PATH:$HOME/.local/bin"
+  script:
+    - meson setup ${MESON_EXTRA_FLAGS} --prefix /usr _build .
+    - meson compile -C _build
+    - meson install -C _build
+    - meson test -C _build --no-suite=style
+  artifacts:
+    reports:
+      junit: "_build/meson-logs/testlog.junit.xml"
+    when: always
+    name: "libgweather-${CI_COMMIT_REF_NAME}"
+    paths:
+      - "${CI_PROJECT_DIR}/_build/meson-logs"
+      - "${CI_PROJECT_DIR}/_build/libgweather/GWeather-4.0.gir"
+      - "${CI_PROJECT_DIR}/_build/libgweather/gweather4.vapi"
+
+# Inherit to build the API reference via gi-docgen
+# @PROJECT_DEPS: the dependencies of the project (on Fedora)
+# @MESON_VERSION: the version of Meson required by the project
+# @MESON_EXTRA_FLAGS: extra arguments for the meson setup invocation
+# @DOCS_FLAGS: doc-related arguments for the meson setup invocation
+# @DOCS_PATH: the docs output directory under the build directory
+.gidocgen-build:
+  image: fedora:latest
+  before_script:
+    - export PATH="$HOME/.local/bin:$PATH"
+    - dnf install -y python3 python3-pip python3-wheel gobject-introspection-devel graphviz ninja-build redhat-rpm-config
+    - dnf install -y ${PROJECT_DEPS}
+    - pip3 install --user meson==${MESON_VERSION} gi-docgen jinja2 Markdown markupsafe packaging pygments toml typogrify
+  script:
+    - meson setup ${MESON_EXTRA_FLAGS} ${DOCS_FLAGS} _docs .
+    - meson compile -C _docs
+    - |
+      pushd "_docs/${DOCS_PATH}" > /dev/null
+      tar cf ${CI_PROJECT_NAME}-docs.tar .
+      popd > /dev/null
+    - mv _docs/${DOCS_PATH}/${CI_PROJECT_NAME}-docs.tar .
+  artifacts:
+    when: always
+    name: 'Documentation'
+    expose_as: 'Download the API reference'
+    paths:
+      - ${CI_PROJECT_NAME}-docs.tar
+
+fedora-x86_64:
+  extends: .build-default
+  stage: build
+  needs: []
+  variables:
+    PROJECT_DEPS:
+      gdk-pixbuf2-devel
+      geocode-glib2-devel
+      gettext
+      git
+      gobject-introspection-devel
+      itstool
+      json-glib-devel
+      libsoup3-devel
+      libxml2-devel
+      ninja-build
+      pylint
+      python3
+      python3-gobject
+      python3-pip
+      python3-wheel
+      redhat-rpm-config
+      vala
+    MESON_VERSION: "0.57.2"
+    MESON_EXTRA_FLAGS: "--buildtype=debug -Dwerror=true -Dgtk_doc=false"
+
+static-scan:
+  extends: .build-setup
+  stage: analysis
+  needs: []
+  variables:
+    PROJECT_DEPS:
+      clang
+      clang-analyzer
+      clang-tools-extra
+      gdk-pixbuf2-devel
+      geocode-glib2-devel
+      gettext
+      git
+      gobject-introspection-devel
+      itstool
+      json-glib-devel
+      libsoup3-devel
+      libxml2-devel
+      ninja-build
+      pylint
+      python3
+      python3-gobject
+      python3-pip
+      python3-wheel
+      redhat-rpm-config
+    MESON_VERSION: "0.57.2"
+    MESON_EXTRA_FLAGS: "--buildtype=debug -Dgtk_doc=false -Dintrospection=false"
+  script:
+    - meson setup --prefix /usr ${MESON_EXTRA_FLAGS} _scan_build .
+    - ninja -C _scan_build scan-build
+  artifacts:
+    name: "gweather-${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
+    when: always
+    paths:
+      - "_scan_build/meson-logs/scanbuild"
+
+asan-build:
+  extends: .build-setup
+  stage: analysis
+  needs: []
+  variables:
+    PROJECT_DEPS:
+      clang
+      clang-analyzer
+      clang-tools-extra
+      gdk-pixbuf2-devel
+      geocode-glib2-devel
+      gettext
+      git
+      gobject-introspection-devel
+      itstool
+      json-glib-devel
+      libasan
+      libsoup3-devel
+      libxml2-devel
+      ninja-build
+      pylint
+      python3
+      python3-gobject
+      python3-pip
+      python3-wheel
+      redhat-rpm-config
+      vala
+    MESON_VERSION: "0.57.2"
+    MESON_EXTRA_FLAGS: "--buildtype=debug -Db_sanitize=address -Db_lundef=false -Dintrospection=false -Dgtk_doc=false"
+  script:
+    - CC=clang meson setup --prefix /usr ${MESON_EXTRA_FLAGS} _asan_build .
+    - meson compile -C _asan_build
+    - meson test -C _asan_build --no-suite=style --no-suite=lint
+  artifacts:
+    name: "gweather-${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
+    when: always
+    paths:
+      - "_asan_build/meson-logs"
+  allow_failure: true
+
+coverage:
+  extends: .build-setup
+  stage: analysis
+  needs: []
+  variables:
+    PROJECT_DEPS:
+      gdk-pixbuf2-devel
+      geocode-glib2-devel
+      gettext
+      git
+      gobject-introspection-devel
+      itstool
+      json-glib-devel
+      lcov
+      libsoup3-devel
+      libxml2-devel
+      ninja-build
+      pylint
+      python3
+      python3-gobject
+      python3-pip
+      python3-wheel
+      redhat-rpm-config
+    MESON_VERSION: "0.57.2"
+    MESON_EXTRA_FLAGS: "--buildtype=debug -Dgtk_doc=false -Dintrospection=false"
+    CFLAGS: "-coverage -ftest-coverage -fprofile-arcs"
+  script:
+    - meson setup --prefix /usr ${MESON_EXTRA_FLAGS} _build .
+    - meson compile -C _build
+    - meson install -C _build
+    - mkdir -p _coverage
+    - lcov --config-file .gitlab-ci/lcovrc --directory _build --capture --initial --output-file "_coverage/${CI_JOB_NAME}-baseline.lcov"
+    - meson test -C _build --no-suite=style --no-suite=lint
+    - lcov --config-file .gitlab-ci/lcovrc --directory _build --capture --output-file "_coverage/${CI_JOB_NAME}.lcov"
+    - bash -x .gitlab-ci/gen-coverage.sh
+  coverage: '/^\s+lines\.+:\s+([\d.]+\%)\s+/'
+  artifacts:
+    name: "gweather-${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
+    when: always
+    paths:
+      - "_build/meson-logs"
+      - "_coverage"
+
+reference:
+  stage: docs
+  needs: []
+  extends: .gidocgen-build
+  variables:
+    PROJECT_DEPS:
+      gdk-pixbuf2-devel
+      geocode-glib2-devel
+      gettext
+      git
+      gobject-introspection-devel
+      itstool
+      json-glib-devel
+      libsoup3-devel
+      libxml2-devel
+      ninja-build
+      pylint
+      python3
+      python3-gobject
+      python3-pip
+      python3-wheel
+      redhat-rpm-config
+      vala
+    MESON_VERSION: "0.57.2"
+    DOCS_FLAGS: "-Dgtk_doc=true"
+    DOCS_PATH: doc/libgweather-4.0
+
+pages:
+  stage: deploy
+  needs: ['reference']
+  script:
+    - mkdir public && cd public
+    - tar xf ../${CI_PROJECT_NAME}-docs.tar
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
+    - main
