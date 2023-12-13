@@ -1,0 +1,26 @@
+From 7cc4d628d46fdfc85b79bfc1e48ea94deb7065f4 Mon Sep 17 00:00:00 2001
+From: bluesky <chenchongbiao@deepin.org>
+Date: Wed, 13 Dec 2023 11:27:20 +0800
+Subject: [PATCH] chore: disable test-libgweather
+
+OBS build cannot use network requests
+---
+ libgweather/tests/meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/libgweather/tests/meson.build b/libgweather/tests/meson.build
+index 63ba8ca..eecea3c 100644
+--- a/libgweather/tests/meson.build
++++ b/libgweather/tests/meson.build
+@@ -12,7 +12,7 @@ gweather_test_env.set('G_ENABLE_DIAGNOSTIC', '0')
+ gweather_test_env.set('LIBGWEATHER_LOCATIONS_PATH', locations_bin.full_path())
+ 
+ gweather_tests = [
+-  { 'name': 'test_libgweather' },
++  #{ 'name': 'test_libgweather' },
+   {
+     'name': 'duplicates',
+     'env': {
+-- 
+2.33.1
+

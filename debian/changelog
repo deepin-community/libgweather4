@@ -1,3 +1,9 @@
+libgweather4 (4.4.0-1deepin1) unstable; urgency=medium
+
+  * disable test-libgweather
+
+ -- bluesky <chenchongbiao@deepin.org>  Wed, 13 Dec 2023 11:28:37 +0800
+
 libgweather4 (4.4.0-1) unstable; urgency=medium
 
   * New upstream release
