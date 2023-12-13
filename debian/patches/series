@@ -1,3 +1,4 @@
 disable-tests-that-require-Internet.patch
 Update-Kyiv-timezone-name.patch
 Fix-Pristina-Kosovo-timezone-name.patch
+0001-chore-disable-test-libgweather.patch
